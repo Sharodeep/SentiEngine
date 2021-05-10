@@ -7,8 +7,8 @@ from engine import main
 def runner(sender,data):
     path = data[0]+"\\"+data[1]
     path = open(path, encoding='utf-8').read()
-    sent, emo =main(path)
-    display(sent,emo)
+    sent, emo , val =main(path)
+    display(sent,emo,val)
     #global display_holder
     #print(sent,emo)
 
@@ -17,18 +17,21 @@ def filesel(sender,data):
     open_file_dialog(runner,extensions=".txt")
 def runner1(sender,data):
     val_holder = get_value("Input")
-    sent,emo = main(val_holder)
-    display(sent,emo)
+    sent,emo,val = main(val_holder)
+    display(sent,emo,val)
 
-def display(val1,val2):
-        display_val = val1 +"\n"+val2
-        print(display_val)
+def display(val1,val2,val3):
+        display_val = "Output:\n"+val1 +"\n"+val2
+        val3_key= list(val3.keys())
+        val3_vals =  list(val3.values())
         set_value("Output:",display_val)
+        print(val3_key,val3_vals)
+        add_pie_series("Plot", "PieChart", val3_vals, val3_key, 5, 5, 2,update_bounds=True)
 
 
 
 #window settings
-set_main_window_size(650,900)
+set_main_window_size(690,900)
 set_global_font_scale(1.25)
 set_theme("Gold")
 set_style_window_padding(30,0)
@@ -51,13 +54,13 @@ with window("DashBoard"):
             add_text("Use the bellow button to select file for analysing\n(only .txt files accepted)",
                      color=[232, 163, 33])
             add_spacing(count=8)
-            add_button("FileSelector", callback=filesel)
+            add_button("File Selector", callback=filesel)
             add_spacing(count=4)
             add_separator()
             add_spacing(count=8)
             add_text("Output:",color=[232,163,33])
         with tab("Plots"):
-            add_plot("Plot",height=-1)
+            add_plot("Plot",height=700,width=590)
 
 
 

@@ -43,19 +43,19 @@ def emotion_analyse(final_words): #Emotion mapping unit
             word, emotion = clean_line.split(':')
             if word in final_words:
                 emotion_list.append(emotion)
-    #print(emotion_list)
+    #print(emotion_list)#for testing
     word_val = Counter(final_words)
     val = Counter(emotion_list)
-    #print(val)
+    #print(val)#for testing
     emo = list(val.keys())
     mos = list(word_val.keys())
     return_holder=("The overall emotion is:"+emo[0]+ "\nThe most used word is:"+ mos[0])
-    #print(return_holder)
-    #ploter(val)
-    return return_holder
+    #print(return_holder)#for testing
+    #ploter(val)#for testing
+    return return_holder,val
 
 
-def ploter(vals): #used for plotting graphs
+def ploter(vals): #used for plotting graphs (not used in GUI,GUI has it's own plotting librabry)
     fig, ax1 = plt.subplots()
     ax1.bar(vals.keys(), vals.values())
     fig.autofmt_xdate()
@@ -66,9 +66,9 @@ def ploter(vals): #used for plotting graphs
 def main(text=open('D:\extras\projects\sentimentA\\file.txt',encoding='utf-8').read()): #main loader responsible for calling all other functions
     loader(text)#open(path, encoding='utf-8').read()
     sent_holder = sentiment_analyse(clean_text)
-    emo_holder = emotion_analyse(final_words)
-    #print(emo_holder)
-    return sent_holder,emo_holder
+    emo_holder, emo_vals = emotion_analyse(final_words)
+    #print(emo_holder) #for testing
+    return sent_holder,emo_holder,emo_vals
 
 clean_text = ""
 final_words = []
