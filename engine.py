@@ -37,6 +37,7 @@ def loader(text): #responsible for loading and cleaning text files and inputs
 
 def emotion_analyse(final_words): #Emotion mapping unit
     emotion_list = []
+    return_holder=""
     with open('emotions.txt', 'r') as file:
         for line in file:
             clean_line = line.replace('\n', '').replace(',', '').replace("'", '').strip()
@@ -49,7 +50,10 @@ def emotion_analyse(final_words): #Emotion mapping unit
     #print(val)#for testing
     emo = list(val.keys())
     mos = list(word_val.keys())
-    return_holder=("The overall emotion is:"+emo[0]+ "\nThe most used word is:"+ mos[0])
+    if not emo or not mos:
+        return_holder = "No emotion detected"
+    else:
+        return_holder = ("The overall emotion is:" + emo[0] + "\nThe most used word is:" + mos[0])
     #print(return_holder)#for testing
     #ploter(val)#for testing
     return return_holder,val
