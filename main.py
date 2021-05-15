@@ -5,7 +5,7 @@ from engine import main
 wind_val = 0
 
 
-def runner(sender, data):
+def runner(sender, data):  # runner code for the file selector
     if data[1] == "." or data[1] == "":
         display("Select valid file")
     else:
@@ -19,11 +19,11 @@ def runner(sender, data):
             # print(sent,emo)
 
 
-def filesel(sender, data):
+def filesel(sender, data):  # file selector
     open_file_dialog(runner, extensions=".txt")
 
 
-def runner1(sender, data):
+def runner1(sender, data):  # runner code text input
     val_holder = get_value("Input")
     if val_holder == "" or val_holder == "Type here!!":
         display("Enter Valid Input")
@@ -34,16 +34,20 @@ def runner1(sender, data):
         display(sent, emo, val)
 
 
-def display(val1, val2="", val3={}):
+def display(val1, val2="", val3={}):  # display moudule
     display_val = "Output:\n" + val1 + "\n" + val2
+    table = []
+    for key, value in val3.items():
+        table.append(list((key, str(value))))
     val3_key = list(val3.keys())
     val3_vals = list(val3.values())
     set_value("Output:", display_val)
-    # print(val3_key,val3_vals) #for testing
-    add_pie_series("Plot", "PieChart", val3_vals, val3_key, 5, 5, 2, update_bounds=True)
+    # print(val3_key,val3_vals,table) #for testing
+    set_table_data(name="EmotionScore", data=table)
+    add_pie_series("Plot", "PieChart", val3_vals, val3_key, 3.5, 3, 2, update_bounds=True)
 
 
-def easter():
+def easter():  # star wars easter egg code
     global wind_val
     wind_val = wind_val + 1
     win_name = "Easter" + str(wind_val)
@@ -85,6 +89,8 @@ with window("DashBoard"):
             add_separator()
             add_spacing(count=8)
             add_text("Output:", color=[232, 163, 33])
+        with tab("Score"):
+            add_table(name="EmotionScore", headers=['Emotion', 'Score'])
         with tab("Plots"):
             add_plot("Plot", height=700, width=590)
 
