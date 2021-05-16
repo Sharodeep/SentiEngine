@@ -37,14 +37,24 @@ def runner1(sender, data):  # runner code text input
 def display(val1, val2="", val3={}):  # display moudule
     display_val = "Output:\n" + val1 + "\n" + val2
     table = []
+    x_ticks = []
     for key, value in val3.items():
         table.append(list((key, str(value))))
     val3_key = list(val3.keys())
     val3_vals = list(val3.values())
+    y_axis = [i * 2 for i in range(len(val3_vals))]
+    for i in range(len(y_axis)):
+        x_ticks.append(list((val3_key[i],y_axis[i])))
     set_value("Output:", display_val)
     # print(val3_key,val3_vals,table) #for testing
     set_table_data(name="EmotionScore", data=table)
-    add_pie_series("Plot", "PieChart", val3_vals, val3_key, 3.5, 3, 2, update_bounds=True)
+    add_pie_series("Pie Chart", "PieChart", val3_vals, val3_key, 3.5, 3, 2, update_bounds=True)
+    add_bar_series("Bar Series","Bar Graph",val3_vals,y_axis,horizontal=True)
+    set_plot_ylimits(plot='Bar Series',ymin=-2,ymax=25)
+    set_yticks(plot="Bar Series",label_pairs=x_ticks)
+    """add_bar_series("Bar Series","Bar Graph",y_axis,val3_vals)
+    set_plot_xlimits(plot="Bar Series",xmin=-2,xmax=25)
+    set_xticks(plot='Bar Series',label_pairs=x_ticks)"""
 
 
 def easter():  # star wars easter egg code
@@ -91,8 +101,10 @@ with window("DashBoard"):
             add_text("Output:", color=[232, 163, 33])
         with tab("Score"):
             add_table(name="EmotionScore", headers=['Emotion', 'Score'])
-        with tab("Plots"):
-            add_plot("Plot", height=700, width=590)
+        with tab("Pie"):
+            add_plot("Pie Chart", height=700, width=590)
+        with tab("Bar"):
+            add_plot("Bar Series",height=700,width=590)
 
 draw_image("logo", "logo_dash.png", [0, 190], [516, 0])
 start_dearpygui(primary_window="DashBoard")

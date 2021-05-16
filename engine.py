@@ -12,8 +12,8 @@ def sentiment_analyse(senti_text):  # Sentiment Analysing unit
     neg_score = senti_score['neg']
     pos_score = senti_score['pos']
     neu_score = senti_score['neu']
-    return_holder = "Positive Score:" + str(pos_score) + " Negative Score:" + str(neg_score) + " Neutral Score:" + str(
-        neu_score)
+    return_holder = "Positive Score:" + str(pos_score) + "\nNegative Score:" + str(neg_score) + "\nNeutral Score:" + str(
+        neu_score)+"\n"
     if neg_score > pos_score and neg_score >= neu_score:
         return_holder1 = "\nThe overall sentiment of the query is Negative with a score of " + str(neg_score)
     elif pos_score > neg_score and pos_score >= neu_score:
@@ -53,7 +53,7 @@ def emotion_analyse(final_words):  # Emotion mapping unit
     if not emoKey or not emoVal:
         return_holder = "No emotion detected"
     else:
-        return_holder = ("The overall emotion is:" + emoKey[0] + "\nThe most used word is:" + emoVal[0])
+        return_holder = ("The overall emotion is:" + emoKey[0] + "\n\nThe most used word is:" + emoVal[0])
     # print(return_holder)#for testing
     # ploter(val)#not used
     return return_holder, val
