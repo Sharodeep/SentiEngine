@@ -77,4 +77,4 @@ def main(text=open('D:\\extras\\projects\\sentimentA\\file.txt', encoding='utf-8
 
 clean_text = ""
 final_words = []
-# main(text)
+# main()

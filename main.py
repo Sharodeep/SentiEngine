@@ -34,7 +34,7 @@ def runner1(sender, data):  # runner code text input
         display(sent, emo, val)
 
 
-def display(val1, val2="", val3={}):  # display moudule
+def display(val1, val2="", val3={}):  # display module
     display_val = "Output:\n" + val1 + "\n" + val2
     table = []
     x_ticks = []
@@ -48,8 +48,8 @@ def display(val1, val2="", val3={}):  # display moudule
     set_value("Output:", display_val)
     # print(val3_key,val3_vals,table) #for testing
     set_table_data(name="EmotionScore", data=table)
-    add_pie_series("Pie Chart", "PieChart", val3_vals, val3_key, 3.5, 3, 2, update_bounds=True)
-    add_bar_series("Bar Series","Bar Graph",val3_vals,y_axis,horizontal=True)
+    add_pie_series("Pie Chart", "PieChart", val3_vals, val3_key, 3, 3, 2, update_bounds=True)
+    add_bar_series("Bar Series","Bar Graph",val3_vals,y_axis,horizontal=True,update_bounds=True)
     set_plot_ylimits(plot='Bar Series',ymin=-2,ymax=25)
     set_yticks(plot="Bar Series",label_pairs=x_ticks)
     """add_bar_series("Bar Series","Bar Graph",y_axis,val3_vals)
