@@ -1,0 +1,17 @@
+click==7.1.2
+cssselect==1.1.0
+cycler==0.10.0
+dearpygui==0.6.415
+joblib==1.0.1
+kiwisolver==1.3.1
+lxml==4.6.3
+matplotlib==3.4.0
+nltk==3.6.2
+numpy==1.20.2
+Pillow==8.1.2
+pyparsing==2.4.7
+pyquery==1.4.3
+python-dateutil==2.8.1
+regex==2021.4.4
+six==1.15.0
+tqdm==4.60.0
