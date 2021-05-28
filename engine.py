@@ -1,10 +1,14 @@
 # DashBoard Engine V0.0.2
 import string
+import nltk
 from collections import Counter
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('vader_lexicon')
 
 
 def sentiment_analyse(senti_text):  # Sentiment Analysing unit
@@ -47,7 +51,7 @@ def emotion_analyse(final_words):  # Emotion mapping unit
     # print(emotion_list)#for testing
     word_val = Counter(final_words)
     val = Counter(emotion_list)
-    print(val)  # for testing
+    #print(val)  # for testing
     emoKey = list(val.keys())
     emoVal = list(word_val.keys())
     if not emoKey or not emoVal:
@@ -67,7 +71,7 @@ def ploter(vals):  # used for plotting graphs (not used in GUI,GUI has it's own 
     plt.show()
 
 
-def main(text=open('D:\\extras\\projects\\sentimentA\\file.txt', encoding='utf-8').read()):  # main loader responsible for calling all other functions
+def main(text="Hello"):  # main loader responsible for calling all other functions
     loader(text)
     sent_holder = sentiment_analyse(clean_text)
     emo_holder, emo_vals = emotion_analyse(final_words)
