@@ -1,0 +1,3 @@
+nltk
+matplotlib
+dearpygui==2.3.1

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+.venv/
+
+# Logs
+dashboard.log
+
+# PyEnv
+.python-version
+
+# Misc
+get-pip.py
+.idea/

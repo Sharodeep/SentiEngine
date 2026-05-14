@@ -1,12 +1,15 @@
 # DashBoard Engine V0.0.2
+import os
 import string
 import nltk
+
+_EMOTIONS_PATH = os.path.join(os.path.dirname(__file__), 'emotions.txt')
 from collections import Counter
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
-nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('stopwords')
 nltk.download('vader_lexicon')
 
@@ -16,7 +19,7 @@ def sentiment_analyse(senti_text):  # Sentiment Analysing unit
     neg_score = senti_score['neg']
     pos_score = senti_score['pos']
     neu_score = senti_score['neu']
-    return_holder = "Positive Score:" + str(pos_score) + "\nNegative Score:" + str(neg_score) + "\nNeutral Score:" + str(
+    return_holder = "Positive Score: " + str(pos_score) + "\nNegative Score: " + str(neg_score) + "\nNeutral Score: " + str(
         neu_score)+"\n"
     if neg_score > pos_score and neg_score >= neu_score:
         return_holder1 = "\nThe overall sentiment of the query is Negative with a score of " + str(neg_score)
@@ -42,22 +45,25 @@ def loader(text):  # responsible for loading and cleaning text files and inputs
 
 def emotion_analyse(final_words):  # Emotion mapping unit
     emotion_list = []
-    with open('emotions.txt', 'r') as file:
+    with open(_EMOTIONS_PATH, 'r') as file:
         for line in file:
             clean_line = line.replace('\n', '').replace(',', '').replace("'", '').strip()
             word, emotion = clean_line.split(':')
-            if word in final_words:
-                emotion_list.append(emotion)
+            if word.strip() in final_words:
+                emotion_list.append(emotion.strip())
     # print(emotion_list)#for testing
     word_val = Counter(final_words)
     val = Counter(emotion_list)
     #print(val)  # for testing
     emoKey = list(val.keys())
-    emoVal = list(word_val.keys())
-    if not emoKey or not emoVal:
+    counts = list(word_val.values())
+    if not emoKey:
         return_holder = "No emotion detected"
+    elif len(counts) >= 2 and counts[0] > counts[1]:
+        top_word = list(word_val.keys())[0]
+        return_holder = ("The overall emotion is: " + emoKey[0] + "\n\nThe most used word is: " + top_word)
     else:
-        return_holder = ("The overall emotion is:" + emoKey[0] + "\n\nThe most used word is:" + emoVal[0])
+        return_holder = ("The overall emotion is: " + emoKey[0])
     # print(return_holder)#for testing
     # ploter(val)#not used
     return return_holder, val
