@@ -35,7 +35,7 @@ pip install -r web/requirements.txt
 streamlit run web/app.py
 ```
 
-Or visit the hosted version at: *(add your Streamlit Community Cloud URL here)*
+Or visit the hosted version at: *https://kuar-sentiengine.streamlit.app*
 
 ### Desktop App
 

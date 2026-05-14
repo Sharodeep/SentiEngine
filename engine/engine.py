@@ -9,9 +9,9 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
-nltk.download('punkt_tab')
-nltk.download('stopwords')
-nltk.download('vader_lexicon')
+nltk.download('punkt_tab', quiet=True)
+nltk.download('stopwords', quiet=True)
+nltk.download('vader_lexicon', quiet=True)
 
 
 def sentiment_analyse(senti_text):  # Sentiment Analysing unit
