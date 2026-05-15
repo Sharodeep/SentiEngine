@@ -1,3 +1,5 @@
 nltk
 matplotlib
+textblob
+flair
 dearpygui==2.3.1

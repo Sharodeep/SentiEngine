@@ -1,1 +1,1 @@
-from .engine import main
+from .engine import main, is_flair_loaded

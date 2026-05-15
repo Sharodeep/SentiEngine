@@ -5,10 +5,23 @@ ROOT = os.path.join(os.path.dirname(__file__), '..')
 sys.path.insert(0, ROOT)
 ASSETS = os.path.join(ROOT, 'assets')
 
+import threading
 import dearpygui.dearpygui as dpg
-from engine import main
+from engine import main, is_flair_loaded
+from engine.engine import MODELS_DESKTOP
 
 wind_val = 0
+
+
+def run_analysis(text, model):
+    needs_flair = model in ('Flair', 'SuperMixed') and not is_flair_loaded()
+    msg = "Loading Flair model for the first time..." if needs_flair else "Analysing..."
+    dpg.set_value("output_text", msg)
+    try:
+        sent, emo, val = main(text, model)
+        display(sent, emo, val)
+    except Exception as e:
+        dpg.set_value("output_text", f"Error: {e}")
 
 
 def runner_file(sender, app_data):
@@ -24,8 +37,8 @@ def runner_file(sender, app_data):
     if not text:
         display("Selected file is empty")
         return
-    sent, emo, val = main(text)
-    display(sent, emo, val)
+    model = dpg.get_value("model_selector")
+    threading.Thread(target=run_analysis, args=(text, model), daemon=True).start()
 
 
 def filesel(sender, data):
@@ -40,8 +53,8 @@ def runner1(sender, data):
     elif val_holder == "Hello there":
         easter()
     else:
-        sent, emo, val = main(val_holder)
-        display(sent, emo, val)
+        model = dpg.get_value("model_selector")
+        threading.Thread(target=run_analysis, args=(val_holder, model), daemon=True).start()
 
 
 def display(val1, val2="", val3={}):
@@ -104,6 +117,11 @@ with dpg.window(tag="DashBoard"):
             dpg.add_image("logo_texture")
             dpg.add_separator()
             dpg.add_spacer(height=12)
+            dpg.add_text("Sentiment Model:", color=[232, 163, 33])
+            dpg.add_radio_button(MODELS_DESKTOP, tag="model_selector", horizontal=True)
+            dpg.add_spacer(height=8)
+            dpg.add_separator()
+            dpg.add_spacer(height=8)
             dpg.add_text("Please enter input for analysing", color=[232, 163, 33])
             dpg.add_input_text(tag="Input", width=560, hint="Type here!!")
             dpg.add_spacer(height=8)
@@ -147,6 +165,7 @@ dpg.create_viewport(title="DashBoard", width=690, height=900)
 dpg.setup_dearpygui()
 dpg.show_viewport()
 dpg.set_primary_window("DashBoard", True)
-dpg.start_dearpygui()
+while dpg.is_dearpygui_running():
+    dpg.render_dearpygui_frame()
 dpg.destroy_context()
 print("Closing GUI")

@@ -12,6 +12,9 @@ dashboard.log
 # PyEnv
 .python-version
 
+# NLTK data
+nltk_data/
+
 # Misc
 get-pip.py
 .idea/
